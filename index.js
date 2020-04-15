@@ -2,19 +2,11 @@
 
 const searchURL = 'https://api.github.com';
 
-function formatQueryParams(params) {
-    const queryItems = Object.keys(params)
-        .map(key => `${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`)
-    return queryItems.join('&');
-}
-
-function getRepo(query) {
-    const params = {
-        q: query,
-        language: "en",
-    };
-    const queryString = formatQueryParams(params)
-    const url = searchURL + '?' + queryString;
+///users/:username/repos
+function getRepo(username) {
+    
+    const queryString = `/users/${username}/repos`
+    const url = searchURL + queryString;
 
     console.log(url);
 /*
@@ -39,31 +31,22 @@ function getRepo(query) {
 
 function displayResults(responseJson) {
     console.log(responseJson);
-    //replace the existing image with the new one
-    if (responseJson.status == 'success') {
-        $('.results-img').replaceWith(
-            `<img src="${responseJson.message}" class="results-img">`)
+    for (let i = 0; i < responseJson.length; i++) {
+        $('.results-js').append(
+        `<p class="result">${responseJson[i].name}</p>
+        <a class="link result" href="${responseJson[i].html_url}">Go to repo!</a><br>`);
     }
-    else if (responseJson.status == 'error') {
-        console.log('Invalid breed.');
-        $('.results-img').replaceWith(
-            `<p class='results-img' >Invalid breed! Please try again.</p>`)
-    }
-    else {
-        console.log('Unkown error');
-        $('.results-img').replaceWith(
-            `<p class='results-img' >Unknown error! Please try again.</p>`)
-    }
-
-    //display the results section
     $('.results').removeClass('hidden');
 }
+
+
 
 function watchForm() {
     $('form').submit(event => {
         event.preventDefault();
         const searchTerm = $('.name').val();
         getRepo(searchTerm);
+        $('.results-js').html('');
     });
 }
 
