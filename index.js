@@ -8,7 +8,7 @@ function getRepo(username) {
     const queryString = `/users/${username}/repos`
     const url = searchURL + queryString;
 
-    console.log(url);
+    //console.log(url);
 /*
     const options = {
         headers: new Headers({
@@ -30,7 +30,7 @@ function getRepo(username) {
 }
 
 function displayResults(responseJson) {
-    console.log(responseJson);
+    //console.log(responseJson);
     for (let i = 0; i < responseJson.length; i++) {
         $('.results-js').append(
         `<p class="result">${responseJson[i].name}</p>
@@ -51,6 +51,6 @@ function watchForm() {
 }
 
 $(function () {
-    console.log('App loaded! Waiting for submit!');
+    //console.log('App loaded! Waiting for submit!');
     watchForm();
 });
